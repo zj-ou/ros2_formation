@@ -4,10 +4,18 @@
 
 ## 功能
 
-- **模式1：直线队形** — 所有乌龟以相同速度同步前进
-- **模式2：多半径环形队形** — 乌龟以不同半径绕同心圆运动
-- **模式3：固定夹角环形编队** — 所有乌龟保持 120° 相位差同速绕圈（挑战任务）
-- **模式0：停止** — 所有乌龟停止运动
+### 编队模式（formation_controller + formation_teleop）
+
+| 模式 | 按键 | 说明 |
+|------|------|------|
+| **直线队形** | `1` | 所有乌龟以相同速度同步前进 |
+| **多半径环形队形** | `2` | 乌龟以不同半径绕同心圆运动 |
+| **固定夹角环形编队** | `3` | 所有乌龟保持 120° 相位差同速绕圈（挑战任务） |
+| **停止** | `0` | 所有乌龟停止运动 |
+
+### 扩展功能：领航跟随（leader_follower）
+
+通过 WASD 键盘控制 **turtle1（领航者）** 运动，**turtle2 和 turtle3** 基于 P 控制器自动跟随，保持固定相对位置。
 
 ## 快速开始
 
@@ -16,8 +24,11 @@
 cd ~/ros2_ws
 colcon build --packages-select formation_package
 source install/setup.bash
+```
 
-# 2. 启动（三个终端）
+### 编队模式（三个终端）
+
+```bash
 # 终端1
 ros2 run turtlesim turtlesim_node
 
@@ -28,15 +39,23 @@ ros2 run formation_package formation_controller
 ros2 run formation_package formation_teleop
 ```
 
-### 键盘控制
+### 领航跟随模式（单独运行）
+
+```bash
+# 终端1
+ros2 run turtlesim turtlesim_node
+
+# 终端2
+ros2 run formation_package leader_follower
+```
 
 | 按键 | 功能 |
 |------|------|
-| `1` | 直线队形 |
-| `2` | 多半径环形队形 |
-| `3` | 固定夹角环形编队（120°） |
-| `0` | 停止 |
-| `q` | 退出 |
+| `W` | 前进 |
+| `S` | 后退 |
+| `A` | 左转 |
+| `D` | 右转 |
+| `Q` | 退出 |
 
 ## 包结构
 
@@ -45,7 +64,8 @@ src/formation_package/
 ├── formation_package/
 │   ├── __init__.py
 │   ├── formation_controller.py    # 编队控制节点
-│   └── formation_teleop.py        # 键盘控制节点
+│   ├── formation_teleop.py        # 键盘控制节点
+│   └── leader_follower.py         # 领航跟随节点（扩展）
 ├── launch/
 │   └── formation_demo.launch.py
 ├── resource/
