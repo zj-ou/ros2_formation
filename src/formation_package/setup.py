@@ -26,6 +26,7 @@ setup(
         'console_scripts': [
             'formation_controller = formation_package.formation_controller:main',
             'formation_teleop = formation_package.formation_teleop:main',
+            'leader_follower = formation_package.leader_follower:main',
         ],
     },
 )
